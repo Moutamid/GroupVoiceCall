@@ -94,33 +94,15 @@ public class Dashboard extends AppCompatActivity implements AGEventHandler {
                 doLeaveChannel();
             }
         });
-        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQ_ID_RECORD_AUDIO)) {
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQ_ID_RECORD_AUDIO)) {
             ((AGApplication) getApplication()).initWorkerThread();
             Toast.makeText(Dashboard.this,"Permission Granted!",Toast.LENGTH_LONG).show();
         }
         getMyData();
         getRoomsUsers();
-        getOtherUsers();
-    }
 
-    private void getOtherUsers() {
-        db.child(user.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            recyclerView.setVisibility(View.VISIBLE);
-                            linearLayout.setVisibility(View.VISIBLE);
-                            callBtn.setVisibility(View.GONE);
-                            worker().joinChannel("group1", config().mUid);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+       // getOtherUsers();
     }
 
     private void getMyData() {
@@ -229,7 +211,7 @@ public class Dashboard extends AppCompatActivity implements AGEventHandler {
 
     private void checkRoomDB() {
 
-        userDB.addValueEventListener(new ValueEventListener() {
+        /*userDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -247,7 +229,11 @@ public class Dashboard extends AppCompatActivity implements AGEventHandler {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id",user.getUid());
+        hashMap.put("mic_status",micStatus);
+        db.child(user.getUid()).updateChildren(hashMap);
     }
 
 
@@ -257,9 +243,43 @@ public class Dashboard extends AppCompatActivity implements AGEventHandler {
         finish();
     }
 
+    String id = "";
     private void doLeaveChannel() {
-        worker().leaveChannel(config().mChannel);
+
+      /*  db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        id = ds.child("id").getValue().toString();
+                    }
+                   if (snapshot.getChildrenCount() < 3){
+                       //for (DataSnapshot ds: snapshot.getChildren()){
+                        //   id = ds.child("id").getValue().toString();
+                           db.child(user.getUid()).removeValue();
+                           db.child(id).removeValue();
+                           worker().leaveChannel(config().mChannel);
+                           callBtn.setVisibility(View.VISIBLE);
+                           recyclerView.setVisibility(View.GONE);
+                           linearLayout.setVisibility(View.GONE);
+
+                   }else {
+                       worker().leaveChannel(config().mChannel);
+                       db.child(user.getUid()).removeValue();
+                       callBtn.setVisibility(View.VISIBLE);
+                       recyclerView.setVisibility(View.GONE);
+                       linearLayout.setVisibility(View.GONE);
+                   }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
         db.child(user.getUid()).removeValue();
+        worker().leaveChannel(config().mChannel);
         callBtn.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
