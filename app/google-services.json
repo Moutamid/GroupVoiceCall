@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174135379556",
+    "project_id": "talk-togather",
+    "storage_bucket": "talk-togather.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174135379556:android:eec6d2929c05c3ca3c4171",
+        "android_client_info": {
+          "package_name": "com.moutamid.groupvoicecall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174135379556-kncqga1fu3fbbml7t8lnsghoolrpb32o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqjG_r9i8Grb1Vuq4-bFqtQt0ZKrLaL_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174135379556-kncqga1fu3fbbml7t8lnsghoolrpb32o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
